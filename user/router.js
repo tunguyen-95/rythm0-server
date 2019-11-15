@@ -4,7 +4,7 @@ const User = require('./model');
 const auth = require('../auth/middleware');
 const router = new Router();
 
-router.post('/user', (req, res, next) => {
+router.post('/api/user', (req, res, next) => {
   User.findOne({
     where: {
       email: req.body.email
@@ -29,13 +29,13 @@ router.post('/user', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/user/:userId/', (req, res, next) => {
+router.get('/api/user/:userId/', (req, res, next) => {
   User.findByPk(req.params.userId)
     .then(user => res.json(user))
     .catch(next);
 });
 
-router.delete('/user/:userId', auth, (req, res, next) => {
+router.delete('/api/user/:userId', auth, (req, res, next) => {
   User.destroy({ where: { id: req.params.userId } })
     .then(numDeleted => {
       if (numDeleted) {
